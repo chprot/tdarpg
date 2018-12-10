@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Faction of the characters
+public enum Faction { Friendly, Neutral, Enemy }
+
 public abstract class Character : MonoBehaviour
 {
     public Rigidbody2D characterRigidBody;
@@ -11,6 +14,7 @@ public abstract class Character : MonoBehaviour
     public int hp;
     public int stamina;
     public float speed;
+    public Faction faction;
 
     // 8-Way Directional Sprites
     public Sprite bottomSprite;
@@ -24,6 +28,7 @@ public abstract class Character : MonoBehaviour
 
     // Direction character is facing
     protected Vector3 lookDirection;
+    protected float characterRotationDeg;
 
     // Abstract functions
     protected abstract void UpdateImpl ();
@@ -59,38 +64,38 @@ public abstract class Character : MonoBehaviour
     private void RotateSprite(Vector3 lookDirection)
     {
         // Find rotation value for the given forward lookDirection
-        float playerRotationDeg = Mathf.Atan2(lookDirection.x, (lookDirection.y)) * Mathf.Rad2Deg;
+        characterRotationDeg = Mathf.Atan2(lookDirection.x, (lookDirection.y)) * Mathf.Rad2Deg;
 
         // Set player sprite based on rotation
-        if (playerRotationDeg > -22.5 && playerRotationDeg <= 22.5)
+        if (characterRotationDeg > -22.5 && characterRotationDeg <= 22.5)
         {
             this.spriteRenderer.sprite = topSprite;
         }
-        if (playerRotationDeg > 22.5 && playerRotationDeg <= 67.5)
+        if (characterRotationDeg > 22.5 && characterRotationDeg <= 67.5)
         {
             this.spriteRenderer.sprite = topRightSprite;
         }
-        if (playerRotationDeg > 67.5 && playerRotationDeg <= 112.5)
+        if (characterRotationDeg > 67.5 && characterRotationDeg <= 112.5)
         {
             this.spriteRenderer.sprite = rightSprite;
         }
-        if (playerRotationDeg > 112.5 && playerRotationDeg <= 157.5)
+        if (characterRotationDeg > 112.5 && characterRotationDeg <= 157.5)
         {
             this.spriteRenderer.sprite = bottomRightSprite;
         }
-        if ((playerRotationDeg > 157.5 && playerRotationDeg <= 180) || (playerRotationDeg > -180 && playerRotationDeg <= -157.5))
+        if ((characterRotationDeg > 157.5 && characterRotationDeg <= 180) || (characterRotationDeg > -180 && characterRotationDeg <= -157.5))
         {
             this.spriteRenderer.sprite = bottomSprite;
         }
-        if (playerRotationDeg > -157.5 && playerRotationDeg <= -112.5)
+        if (characterRotationDeg > -157.5 && characterRotationDeg <= -112.5)
         {
             this.spriteRenderer.sprite = bottomLeftSprite;
         }
-        if (playerRotationDeg > -112.5 && playerRotationDeg <= -67.5)
+        if (characterRotationDeg > -112.5 && characterRotationDeg <= -67.5)
         {
             this.spriteRenderer.sprite = leftSprite;
         }
-        if (playerRotationDeg > -67.5 && playerRotationDeg <= -22.5)
+        if (characterRotationDeg > -67.5 && characterRotationDeg <= -22.5)
         {
             this.spriteRenderer.sprite = topLeftSprite;
         }

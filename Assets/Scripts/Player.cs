@@ -8,6 +8,7 @@ public class Player : Character {
     protected override void StartImpl()
     {
         this.spriteRenderer.sprite = bottomSprite;
+        this.faction = Faction.Friendly;
     }
 
 	// Update is called once per frame
