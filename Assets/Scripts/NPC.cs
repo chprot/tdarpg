@@ -10,7 +10,7 @@ public class AggroArea : MonoBehaviour
     void Start()
     {
         aggroCollider2D = this.gameObject.AddComponent<CapsuleCollider2D>();
-        aggroCollider2D.offset = new Vector2(aggroCollider2D.offset.x, aggroCollider2D.offset.y + 1.0f); // slightly offset forward from NPC
+        aggroCollider2D.offset = new Vector2(aggroCollider2D.offset.x, aggroCollider2D.offset.y + 0.2f); // slightly offset forward from NPC
         aggroCollider2D.isTrigger = true;
 
         targetList = new List<Character>();
@@ -18,6 +18,9 @@ public class AggroArea : MonoBehaviour
 
     void Update()
     {
+        // Update rotation to the Character owner's rotation
+        Character owner = this.GetComponentInParent<Character>();
+        this.transform.rotation = Quaternion.Euler(0, 0, owner.characterRotationDeg);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -41,6 +44,7 @@ public class NPC : Character
         aggroAreaGameObject.AddComponent<AggroArea>();
 
         // Make aggro area follow player position and rotation by setting parent transform
+        aggroAreaGameObject.transform.position = this.gameObject.transform.position;
         aggroAreaGameObject.transform.parent = this.gameObject.transform;
 	}
 
@@ -50,7 +54,7 @@ public class NPC : Character
         // Attack any enemy targets in in this NPC's aggro area
         AggroArea aggroArea = aggroAreaGameObject.GetComponent<AggroArea>();
         List<Character> targetList = aggroArea.targetList;
-        Character enemyTarget = targetList.Find(x => x.faction != null && x.faction != this.faction);
+        Character enemyTarget = targetList.Find(x => x.faction != this.faction);
         if (enemyTarget != null)
         {
             // TODO: If in range, attack

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character {
-
+public class Player : Character 
+{
     // Use this for initialization
     protected override void StartImpl()
     {
@@ -28,6 +28,8 @@ public class Player : Character {
         characterRigidBody.velocity = playerMovement;
 
         // Set the character's look direction based on input
+        Vector3 previousLookDirection = lookDirection;
+
         lookDirection.x = Input.GetAxis("LookHorizontal");
         lookDirection.y = Input.GetAxis("LookVertical");
         lookDirection.y = 0.0f;
@@ -37,6 +39,12 @@ public class Player : Character {
         {
             lookDirection.x = playerMovement.x;
             lookDirection.y = playerMovement.y;
+        }
+
+        // If look direction is still zero, just keep it at whatever it was
+        if (lookDirection.magnitude == 0.0f)
+        {
+            lookDirection = previousLookDirection;
         }
     }
 }

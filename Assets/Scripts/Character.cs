@@ -8,6 +8,7 @@ public enum Faction { Friendly, Neutral, Enemy }
 public abstract class Character : MonoBehaviour
 {
     public Rigidbody2D characterRigidBody;
+    public CircleCollider2D characterCollider;
     public SpriteRenderer spriteRenderer;
 
     // Player stats
@@ -28,7 +29,7 @@ public abstract class Character : MonoBehaviour
 
     // Direction character is facing
     protected Vector3 lookDirection;
-    protected float characterRotationDeg;
+    public float characterRotationDeg;
 
     // Abstract functions
     protected abstract void UpdateImpl ();
@@ -41,6 +42,9 @@ public abstract class Character : MonoBehaviour
         characterRigidBody = this.gameObject.AddComponent<Rigidbody2D>();
         characterRigidBody.drag = 0.5f;
         characterRigidBody.gravityScale = 0.0f;
+
+        // Add Collider
+        characterCollider = this.gameObject.AddComponent<CircleCollider2D>();
 
         // Add Sprite
         spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
