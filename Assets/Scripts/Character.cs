@@ -42,9 +42,11 @@ public abstract class Character : MonoBehaviour
         characterRigidBody = this.gameObject.AddComponent<Rigidbody2D>();
         characterRigidBody.drag = 0.5f;
         characterRigidBody.gravityScale = 0.0f;
+        characterRigidBody.freezeRotation = true;
 
         // Add Collider
         characterCollider = this.gameObject.AddComponent<CircleCollider2D>();
+        characterCollider.radius = 0.1f;
 
         // Add Sprite
         spriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();

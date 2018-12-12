@@ -20,7 +20,7 @@ public class AggroArea : MonoBehaviour
     {
         // Update rotation to the Character owner's rotation
         Character owner = this.GetComponentInParent<Character>();
-        this.transform.rotation = Quaternion.Euler(0, 0, owner.characterRotationDeg);
+        this.transform.rotation = Quaternion.Euler(0, 0, -owner.characterRotationDeg);
     }
 
     void OnTriggerEnter2D(Collider2D other)
